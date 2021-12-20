@@ -1,0 +1,41 @@
+[Tournament Section]
+*************************
+__2 (for tournament data)
+*************************
+012 Tournament_name
+022 City
+032 (Federation)
+042 Date of start
+052 Date of end
+062 Number of players
+072 Number of rated players
+082 Number of teams (in team tournament)
+092 Individual  Swiss Dutch 2017 rules
+102 Chief Arbiter
+122 Allotted times per moves/game
+132 Dates of the round (YY/MM/DD) pos 92 - 99; pos 102 - 99 and so on
+XXR # - number of rounds
+XXZ [list of absent players] by ID
+
+[Player Section]
+Player_Section_identification (1-3), starting rank(player_id) - number 1-9999 (5-8), m/w (10), title (11-13), name (15-47)
+FIDE rating (49-52) points XX.X (81-84), rank (86-89)
+==========================================
+for each round __2-__5 (jedna desiatka):
+2-5: (blanks or "0000" or player ID),
+7: w (white) b (black) - (not paired),
+9:  "+" forfeit (prepadnuta) hra win
+    "-" forfeit (prepadnuta) hra loss
+    "W" "D" "L" - not played game (Win, Draw, Loss)
+    "1" "=" "0" - regular ended game (Win, Draw, Loss)
+    "H" "F" "U" "Z" - Half, Full, Zero (blank is zero) - point-bye; U - is not paired by system (not case sensitive)
+===========================================
+001    1      Test0001 Player0001               1500                             3.0    1     4 b 1     3 w 1     5 b 1	
+001    2      Test0002 Player0002               1500                             3.0    2     5 w 1     6 b 1     3 w 1
+001    3      Test0003 Player0003               1500                             1.0    3     6 w 1     1 b 0     2 b 0
+001    4      Test0004 Player0004               1500                             1.0    4     1 w 0     5 b 0     6 b 1
+001    5      Test0005 Player0005               1500                             1.0    5     2 b 0     4 w 1     1 w 0
+001    6      Test0006 Player0006               1500                             0.0    6     3 b 0     2 w 0     4 w 0
+
+HashMap<Integer, Tuple<String, Integer, Double, Integer, LinkedList<Triplet<Integer, Char, Char>>
+HashMap<ID, Tuple<name, ratings, points, rank, LinkedList<Triplet<player, color, result>>
