@@ -30,7 +30,7 @@ for each round __2-__5 (jedna desiatka):
     "1" "=" "0" - regular ended game (Win, Draw, Loss)
     "H" "F" "U" "Z" - Half, Full, Zero (blank is zero) - point-bye; U - is not paired by system (not case sensitive)
 ===========================================
-001    1      Test0001 Player0001               1500                             3.0    1     4 b 1     3 w 1     5 b 1	
+001    1      Test0001 Player0001               1500                             3.0    1     4 b 1     3 w 1     5 b 1
 001    2      Test0002 Player0002               1500                             3.0    2     5 w 1     6 b 1     3 w 1
 001    3      Test0003 Player0003               1500                             1.0    3     6 w 1     1 b 0     2 b 0
 001    4      Test0004 Player0004               1500                             1.0    4     1 w 0     5 b 0     6 b 1
