@@ -8,13 +8,16 @@ import java.util.*;
 
 public class reader {
 
-    public static HashMap<Integer, Triplet<Integer, Integer, LinkedList<Integer>>>
-        checkRules(HashMap<Integer, Pentaplet<String, Integer, Double, Integer, LinkedList<Triplet<Integer, String, String>>>> hm) throws PairException {
-        //id, rating, points, played with teammates, List: color difference, last colors.
+    public static HashMap<Integer, Pentaplet<Integer, Integer, Pair<Double,Integer>, List<Integer>, List<Integer>>>
+        //id: {color diff, last colors, {points, ratings}, possible players, matched players}
+        checkRules(HashMap<Integer, Pentaplet<String, Integer, Double, Integer, List<Triplet<Integer, String, String>>>> hm) throws PairException, ColorCount, SamePairException {
+        //id, rating, points, played with teammates = List: color difference, last colors.
         Iterator<Integer> it = hm.keySet().stream().iterator();
         int i;
-        int counter = 0;
-        LinkedList<HashMap<Integer, Triplet<Integer, String, String>>> rounds = new LinkedList<>();
+        int counter;
+        List<Integer> allPlayers = new ArrayList<>(hm.keySet());
+        System.out.println(allPlayers);
+        List<HashMap<Integer, Triplet<Integer, String, String>>> rounds = new ArrayList<>();
         //list of rounds
         while (it.hasNext()) {
             i = it.next();
@@ -42,13 +45,20 @@ public class reader {
             while (iterator.hasNext()) {
 
                 tmp = iterator.next();
-                if (round.get(tmp) == null) throw new PairException("No matched teammate in round " + c + " at player " + tmp);
+                if (round.get(tmp) == null) throw new PairException("No matched teammate in round #" + c + " at player " + tmp);
                 if (round.get(tmp).getFirst() != 0) {
-                    if (round.get(round.get(tmp).getFirst()) == null) throw new PairException("No teammate found in round " + c + " at player " + tmp);
-                    if (round.get(round.get(tmp).getFirst()).getFirst() != tmp) throw new PairException("No matched teammate in round " + c + " at player " + tmp);
+                    if (round.get(round.get(tmp).getFirst()) == null) throw new PairException("No teammate found in round #" + c + " at player " + tmp);
+                    if (round.get(round.get(tmp).getFirst()).getFirst() != tmp) throw new PairException("No matched teammate in round #" + c + " at player " + tmp);
+                    else if (round.get(tmp).getSecond().equals("w") && !round.get(round.get(tmp).getFirst()).getSecond().equals("b")) throw new PairException("No legal game in round #" + c + " at player " + tmp + " as \"w\" with opponent \"w\"!");
+                    if (round.get(tmp).getThird().equals("1") && !round.get(round.get(tmp).getFirst()).getThird().equals("0")) throw new PairException("No legal result in round #" + c + " at player " + tmp + " with result \"1\" expected opponent's result \"0\"!");
+                    if (round.get(tmp).getThird().equals("0") && !round.get(round.get(tmp).getFirst()).getThird().equals("1")) throw new PairException("No legal result in round #" + c + " at player " + tmp + " with result \"0\" expected opponent's result \"1\"!");
+                    if (round.get(tmp).getThird().equals("=") && !round.get(round.get(tmp).getFirst()).getThird().equals("=")) throw new PairException("No legal result in round #" + c + " at player " + tmp + " with result \"=\" expected opponent's result \"=\"!");
+
+                    if (round.get(tmp).getThird().equals("+") && !round.get(round.get(tmp).getFirst()).getThird().equals("-")) throw new PairException("No legal result in round #" + c + " at player " + tmp + " with result \"+\" expected opponent's result \"-\"!");
+
 
                     System.out.printf(" %s", round.get(round.get(tmp).getFirst()));
-                     System.out.println(" " + round.get(round.get(tmp).getFirst()).getFirst());
+                    System.out.println(" " + round.get(round.get(tmp).getFirst()).getFirst());
                 }
                     //get player, which is paired
             }
@@ -56,25 +66,64 @@ public class reader {
             c++;
         }
 
-        return null;
+        it = hm.keySet().stream().iterator();
+        //list of rounds
+        List<Integer> currentFrom;
+        List<Integer> currentTo;
+        HashMap<Integer, Pentaplet<Integer, Integer, Pair<Double,Integer>, List<Integer>, List<Integer>>> out = new HashMap<>();
+            //id: {color diff, last colors, {points, ratings}, possible players, matched players}
+        int colDiff;
+        int lastColors;
+        while (it.hasNext()) {
+            currentFrom = new ArrayList<>(allPlayers);
+            currentTo = new ArrayList<>();
+            colDiff = 0;
+            lastColors = 0;
+            i = it.next();
+            counter = 0;
+
+            currentFrom.remove((Integer) i);
+            for (Triplet<Integer, String, String> triplet : hm.get(i).getFifth()) {
+                counter++;
+                if (triplet.getFirst() != 0) {
+                    if (!currentFrom.contains(triplet.getFirst())) throw new SamePairException("Cannot be specific pair more than once in one tournament at player id: " + i + " at round: #" + counter);
+                    currentTo.add(currentFrom.remove(currentFrom.indexOf(triplet.getFirst())));
+                    if (triplet.getSecond().equals("w")) colDiff++;
+                    if (triplet.getSecond().equals("b")) colDiff--;
+                    if (Math.abs(colDiff) > 2) throw new ColorCount("Color count difference is not from interval <-2;2>. Current: " + colDiff + " at player id: " + i + " at round: #" + counter);
+                    if (triplet.getSecond().equals("w") && lastColors >= 0) lastColors++;
+                    else if (triplet.getSecond().equals("w") && lastColors < 0) lastColors = 1;
+                    else if (triplet.getSecond().equals("b") && lastColors <= 0) lastColors--;
+                    else if (triplet.getSecond().equals("b") && lastColors > 0) lastColors = -1;
+                    else if (Math.abs(lastColors) > 2) throw new ColorCount("Only two same colors can be in a row. Current: " + lastColors + " at player id: " + i + "at round: #" + counter);
+                }
+                else currentTo.add(0);
+            }
+            //id: {color diff, last colors, {points, ratings}, possible players, matched players}
+            out.put(i, new Pentaplet<>(colDiff, lastColors, new Pair<>(hm.get(i).getThird(), hm.get(i).getSecond()),currentFrom, currentTo));
+        }
+
+
+
+        return out;
     }
 
-    /*public static void checkRound(LinkedList<Pair<Integer, Triplet<Integer, String, String>>> round) {
+    /*public static void checkRound(ArrayList<Pair<Integer, Triplet<Integer, String, String>>> round) {
 
     }*/
 
-    public static HashMap<Integer, Pentaplet<String, Integer, Double, Integer, LinkedList<Triplet<Integer, String, String>>>> read(String name) throws FileNotFoundException, ColumnSpacePositions {
+    public static HashMap<Integer, Pentaplet<String, Integer, Double, Integer, List<Triplet<Integer, String, String>>>> read(String name) throws FileNotFoundException, ColumnSpacePositions {
         int id = 0;
         try {
             File file = new File(name);
             Scanner sc = new Scanner(file);
             StringBuilder sb;
-            HashMap<Integer, Pentaplet<String, Integer, Double, Integer, LinkedList<Triplet<Integer, String, String>>>> hm;
+            HashMap<Integer, Pentaplet<String, Integer, Double, Integer, List<Triplet<Integer, String, String>>>> hm;
             if (!sc.hasNextLine()) {
                 return null;
             }
             hm = new HashMap<>();
-            LinkedList<Triplet<Integer, String, String>> round;
+            List<Triplet<Integer, String, String>> round;
             while (sc.hasNextLine()) {
 
                 sb = new StringBuilder(sc.nextLine());
@@ -89,7 +138,7 @@ public class reader {
                     if (!sb.substring(84,85).equals(" ")) throw new ColumnSpacePositions("Space expected at column " + 84 + "at player with id: " + id);
 
                     System.out.println(sb);
-                    round = new LinkedList<>();
+                    round = new ArrayList<>();
                     int i = 91;
                     while (sb.length() > i) {
                         if (!sb.substring(i-2,i).equals("  ")) throw new ColumnSpacePositions("Space expected at column " + (i - 2) + ", " + (i - 1) + ".at player with id: " + id);
@@ -135,13 +184,13 @@ public class reader {
 
     public static void main(String[] args) {
         try {
-            HashMap<Integer, Pentaplet<String, Integer, Double, Integer, LinkedList<Triplet<Integer, String, String>>>> hm;
+            HashMap<Integer, Pentaplet<String, Integer, Double, Integer, List<Triplet<Integer, String, String>>>> hm;
             hm = read("vstup3_6p.trf");
             if (hm == null) {
                 System.err.println("Error in reading file or specified file is empty.");
                 return;
             }
-            checkRules(hm);
+            System.out.println(checkRules(hm));
         }
         catch (FileNotFoundException e) {
             System.err.println("FileNotFoundException: " + e.getMessage());
@@ -152,8 +201,8 @@ public class reader {
         catch (StringIndexOutOfBoundsException e) {
             System.err.println("Nesprávny formát .trf súboru: " + e.getMessage());
         }
-        catch (ColumnSpacePositions | PairException columnSpacePositions) {
-            columnSpacePositions.printStackTrace();
+        catch (ColumnSpacePositions | PairException | ColorCount | SamePairException message) {
+            message.printStackTrace();
         }
     }
 }
