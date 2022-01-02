@@ -1,0 +1,36 @@
+# Properties to setup a random tournament
+#****************************************
+# PlayersNumber => number of players
+PlayersNumber=8
+
+# RoundsNumber  => number of rounds
+RoundsNumber=7
+
+# DrawPercentage => percentage of draws
+#    Nearly each game has such a probability to end in a draw
+DrawPercentage=0
+
+# ForfeitRate => average number of games before getting a forfeited game
+#    A low number (e.g 5) means a high number of forfeited games
+#    A high number (e.g. 1000) sort of eliminates forfeited games
+ForfeitRate=0
+
+# RetiredRate => average number of players (in the whole tournament) before getting an absent player
+#    It is a rate, so it is valid what was said for forfeits
+#    Can never be less than 2 - the autogenerator will check, though
+RetiredRate=0
+
+# HalfPointByeRate => average number of players (in the whole tournament) before getting a player requesting a half point byes
+#    It is a rate, so see above
+HalfPointByeRate=0
+
+# Ratings are randomically computed in the range lowest-highest
+#    Two players will not have the same rating 
+#    HighestRating => the rating of the strongest player in the field
+#    LowestRating => the tentative rating of the weakest player in the field
+HighestRating=1500
+LowestRating=1500
+
+# To use a different scoring system from the traditional (1) (.5) (0)
+#PointsForWin=1.0
+#PointsForDraw=0.5

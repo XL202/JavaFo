@@ -1,0 +1,20 @@
+Generátor dvojíc:
+java -ea -jar javafo.jar -r [file_from] -p [file_to]
+java -ea -jar javafo.jar -r vstup2_6.trf -p out_2.txt
+
+Random generátor: 
+java -ea -jar javafo.jar -g [podmienky] -b -o [do súboru]
+java -ea -jar javafo.jar -g S01.txt -b -o trn.trf
+
+javafo nie je opensource
+XXR number (počet kôl)
+
+VSTUP1
+4 (6) hráči 3 kolá - 3. kolo sa nedá urobiť, 2 kolá sa už odohrali.
+
+VSTUP2
+2 kolá pred koncom má hráč na výber 2 súperov (1 prirodzený na základe bodov, 2. ako krajná možnosť) - dá sa urobiť 
+Kvôli farbám v poslednom kole, sa musí vybrať v predošlom kole tá krajná možnosť, lebo len s ňou bude sedieť farba v poslednom kole.
+
+VSTUP3
+hráč ma na výber dvoch súperov, keď si vyberie prirodzeného, tak zvyšných sa mu nepodarí spárovať, preto si musí vybrať krajnú možnosť.

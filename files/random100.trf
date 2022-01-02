@@ -1,0 +1,20 @@
+012 AutoTest 523716382968100
+022 F0Q6Z8R0H24F0H1500L1500G2S29WW1BW1WD,5BD,5WL0BL0ZP0HP,5FP1PA1FW1FL0
+032 FIDE
+042 
+052 
+062 8
+072 8
+082 0
+092 Individual  Swiss Dutch 2017 rules
+102 Auto-Generator
+122 
+132                                                                                                                                                              
+001    1      Test0001 Player0001               1500                             3.5    2     5 w =     7 b 0     2 w 1     4 b =     8 w 0     6 b 1     3 w =  
+001    2      Test0002 Player0002               1500                             3.0    7     6 b 0     8 w 1     1 b 0     3 w 1     7 b =     5 w =     4 b 0  
+001    3      Test0003 Player0003               1500                             3.5    3     7 w 0     5 b =     8 w =     2 b 0     6 w 1     4 b 1     1 b =  
+001    4      Test0004 Player0004               1500                             3.5    4     8 b 1     6 w 1     7 b 0     1 w =     5 b 0     3 w 0     2 w 1  
+001    5      Test0005 Player0005               1500                             3.5    5     1 b =     3 w =     6 b 0     8 b 0     4 w 1     2 b =     7 w 1  
+001    6      Test0006 Player0006               1500                             2.0    8     2 w 1     4 b 0     5 w 1     7 w 0     3 b 0     1 w 0     8 b 0  
+001    7      Test0007 Player0007               1500                             5.5    1     3 b 1     1 w 1     4 w 1     6 b 1     2 w =     8 b 1     5 b 0  
+001    8      Test0008 Player0008               1500                             3.5    6     4 w 0     2 b 0     3 b =     5 w 1     1 b 1     7 w 0     6 w 1  

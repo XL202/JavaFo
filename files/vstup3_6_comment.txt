@@ -1,0 +1,17 @@
+XXR 5                                                                                                                                          
+001    1      Test0001 Player0001               1500  3.0    1     4 b 1     3 w 1     5 b 1     6 w      2 b	| 2	| 2 
+001    2      Test0002 Player0002               1500  3.0    2     5 w 1     6 b 1     3 w 1	 4 b      1 w	| 1	| 1
+001    3      Test0003 Player0003               1500  1.0    3     6 w 1     1 b 0     2 b 0	 5 w      4 w	| 4	| 5
+001    4      Test0004 Player0004               1500  1.0    4     1 w 0     5 b 0     6 b 1	 2 w      3 b	| 3	| X (4 už obsahuje 6)
+001    5      Test0005 Player0005               1500  1.0    5     2 b 0     4 w 1     1 w 0	 3 b      6 b	| 6 X	| 3
+001    6      Test0006 Player0006               1500  0.0    6     3 b 0     2 w 0     4 w 0	 1 b      5 w	| 5 X	| X (6 už obsahuje 4)
+ak by javafo namiesto 6-1 v štvrtom kole zvolil 2-1, potom už nedokáže vyskladať zvyšné páry 			| 4. kolo zlý výber
+možnosť 1-6 je najmenej prirodzená, možnosť 2-1 by bola najviac prirodzená (ale nesprávna)
+java -ea -jar javafo.jar -r vstup3_6.trf -p out3_6.txt
+javavo sa zachoval správne a vygeneroval súbor:
+------
+3
+4 2
+1 6
+3 5
+------

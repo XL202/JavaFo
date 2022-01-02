@@ -49,7 +49,10 @@ public class reader {
                 if (round.get(tmp).getFirst() != 0) {
                     if (round.get(round.get(tmp).getFirst()) == null) throw new PairException("No teammate found in round #" + c + " at player " + tmp);
                     if (round.get(round.get(tmp).getFirst()).getFirst() != tmp) throw new PairException("No matched teammate in round #" + c + " at player " + tmp);
-                    else if (round.get(tmp).getSecond().equals("w") && !round.get(round.get(tmp).getFirst()).getSecond().equals("b")) throw new PairException("No legal game in round #" + c + " at player " + tmp + " as \"w\" with opponent \"w\"!");
+                    else {
+                        if (round.get(tmp).getSecond().equals("w") && !round.get(round.get(tmp).getFirst()).getSecond().equals("b")) throw new PairException("No legal game in round #" + c + " at player " + tmp + " as \"w\" with opponent " + round.get(tmp).getFirst() + " as \"w\"!");
+                        if (round.get(tmp).getSecond().equals("b") && !round.get(round.get(tmp).getFirst()).getSecond().equals("w")) throw new PairException("No legal game in round #" + c + " at player " + tmp + " as \"b\" with opponent " + round.get(tmp).getFirst() + " as \"b\"!");
+                    }
                     if (round.get(tmp).getThird().equals("1") && !round.get(round.get(tmp).getFirst()).getThird().equals("0")) throw new PairException("No legal result in round #" + c + " at player " + tmp + " with result \"1\" expected opponent's result \"0\"!");
                     if (round.get(tmp).getThird().equals("0") && !round.get(round.get(tmp).getFirst()).getThird().equals("1")) throw new PairException("No legal result in round #" + c + " at player " + tmp + " with result \"0\" expected opponent's result \"1\"!");
                     if (round.get(tmp).getThird().equals("=") && !round.get(round.get(tmp).getFirst()).getThird().equals("=")) throw new PairException("No legal result in round #" + c + " at player " + tmp + " with result \"=\" expected opponent's result \"=\"!");
@@ -114,9 +117,11 @@ public class reader {
 
     public static HashMap<Integer, Pentaplet<String, Integer, Double, Integer, List<Triplet<Integer, String, String>>>> read(String name) throws FileNotFoundException, ColumnSpacePositions {
         int id = 0;
+        File file = new File(name);
+        Scanner sc = new Scanner(file);
         try {
-            File file = new File(name);
-            Scanner sc = new Scanner(file);
+
+
             StringBuilder sb;
             HashMap<Integer, Pentaplet<String, Integer, Double, Integer, List<Triplet<Integer, String, String>>>> hm;
             if (!sc.hasNextLine()) {
@@ -185,7 +190,7 @@ public class reader {
     public static void main(String[] args) {
         try {
             HashMap<Integer, Pentaplet<String, Integer, Double, Integer, List<Triplet<Integer, String, String>>>> hm;
-            hm = read("vstup3_6p.trf");
+            hm = read("files/vstup3_6t.trf");
             if (hm == null) {
                 System.err.println("Error in reading file or specified file is empty.");
                 return;
