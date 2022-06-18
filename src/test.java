@@ -1,13 +1,16 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 public class test {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("blossom5");
+        processBuilder.command("./blossom5", "-e", "GRAPH1.txt", "-w", "out.txt");
+        processBuilder.inheritIO();
+        processBuilder.start();
         //"-e GRAPH1.TXT -w out.txt"
-        try {
+        /*try {
 
             //Process process = processBuilder.start();
             Process process = Runtime.getRuntime().exec("./blossom5");
@@ -19,14 +22,14 @@ public class test {
                 System.out.println(line);
             }
             */
-            int exitCode = process.waitFor();
+           /* int exitCode = process.waitFor();
             System.out.println("\nExited with error code : " + exitCode);
 
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 

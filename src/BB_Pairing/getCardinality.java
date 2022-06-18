@@ -12,7 +12,7 @@ public class getCardinality {
     //poznamka: nemoze byt "diera", playeri musia byt v dvojiciach obsiahnuty bez vynechania
     // (t.j. nemoze byt v paroch 0,1,2,4,5  a bez 3)
 
-    public static int bbCardinality(String BB_Path, ArrayList<Edge> edges, ArrayList<Boolean> notPlay, int max) {
+    public static int bbCardinality(String BB_Path, ArrayList<Edge> edges, ArrayList<Boolean> notPlay, int max) throws IOException {
         // notPlay ==> list hracov, ktory nie su obsiahnuty v edges (musim) mat suvisly rad,
         // preto posuvam tak, aby bol suvisly rad
         HashMap<Integer, Integer> hm = new HashMap<>();
@@ -25,7 +25,7 @@ public class getCardinality {
         return getCardinality(null,edges, max, hm);
     }
 
-    public static int getCardinality(String BB_Path, ArrayList<Edge> edges, int playerCount, HashMap<Integer,Integer> hm) {
+    public static int getCardinality(String BB_Path, ArrayList<Edge> edges, int playerCount, HashMap<Integer,Integer> hm) throws IOException {
         int next = playerCount;
         try {
             FileWriter myWriter = new FileWriter("tmp_out.txt");
@@ -54,13 +54,17 @@ public class getCardinality {
         }
 
         //spusti BB subor na tmp_out
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        processBuilder.command("./blossom5", "-e", "tmp_out.txt", "-w", "output.txt");
+        processBuilder.inheritIO();
+        processBuilder.start();
         //find cost in BB output
         //cardinality = cost % players (pocet sparovanych dvojic)
         return 0;
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ArrayList<Edge> test = new ArrayList<>();
         HashMap<Integer,Integer> hm = new HashMap<>();
         ArrayList<Boolean> b = new ArrayList<>();
