@@ -190,7 +190,7 @@ public class reader {
     public static void main(String[] args) {
         try {
             HashMap<Integer, Pentaplet<String, Integer, Double, Integer, List<Triplet<Integer, String, String>>>> hm;
-            hm = read("files/vstup3_6t.trf");
+            hm = read("files/random100.trf");
             if (hm == null) {
                 System.err.println("Error in reading file or specified file is empty.");
                 return;
