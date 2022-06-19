@@ -1,0 +1,78 @@
+každý hráč bude mať množinu hráčov, s ktorými môže hrať: (aby sa dodržali pravidlá o farbách a také, že nikto nemôže spolu hrať viac ako raz).
+
+Hráčov musí byť párny počet, čo mi zabezpečí vyraďovanie hráčov.
+
+Kmax = maximálna kardinalita (dané ako parameter alebo počet hráčov/2)
+
+Input: all_possible_edges (PE)
+
+zoradenie hráčov podľa bodov
+skupina 1(G1): hráči podľa bodov do polovice => zoradené podľa bodov zostupne
+skupina 2(G2): zvyšní hráči
+
+nech hráč p má p.with() pole hráčov, s ktorými môže hrať
+
+ArrayList<Edge> final_edges;
+
+tmp_e = PE;
+bool found = false;
+for(Player p: fromG1) {
+    for(Player pw: p.with()) {
+	tmp_e -= new Edge(p, pw);
+	int c = BB(tmp_e);
+	if (c = Kmax -1) {
+	    final_edges.add(new Edge(p,pw));
+	    found = true;	
+	    break;
+	} 
+    }
+    if (found) {
+    	Kmax -= 1;
+	removePlayersPPwFromAllOfRemainingPlayersInBothGroups(p, pw);
+	fromG1.remove(pw);
+	found = false;
+    }
+}
+
+
+
+tmp_e = PE;
+bool found = false;
+for(Player p: fromG2) {
+    for(Player pw: p.with()) {
+	tmp_e -= new Edge(p, pw);
+	int c = BB(tmp_e);
+	if (c = Kmax -1) {
+	    final_edges.add(new Edge(p,pw));
+	    found = true;	
+	    break;
+	} 
+    }
+    if (found) {
+    	Kmax -= 1;
+	removePlayersPPwFromAllOfRemainingPlayersInBothGroups(p, pw);
+	fromG1.remove(pw);
+	found = false;
+    }
+}
+
+
+tmp_e = PE;
+bool found = false;
+for(Player p: (fromG1+fromG2)) {
+    for(Player pw: p.with()) {
+	tmp_e -= new Edge(p, pw);
+	int c = BB(tmp_e);
+	if (c = Kmax -1) {
+	    final_edges.add(new Edge(p,pw));
+	    found = true;	
+	    break;
+	} 
+    }
+    if (found) {
+    	Kmax -= 1;
+	removePlayersPPwFromAllOfRemainingPlayersInBothGroups(p, pw);
+	fromG1.remove(pw);
+	found = false;
+    }
+}

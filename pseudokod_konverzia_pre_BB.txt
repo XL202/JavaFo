@@ -1,0 +1,11 @@
+int BB(set possible_pairs) {
+    //possible_pairs maju vahu 0	
+    //numbered from 0 to count of possible players (PP) - 1
+    //struktura Edge: from, to, weight	(alebo player1, player2)
+    pairs_tmp = possible_pairs;
+    for(Edge e : possible_pairs) pairs_tmp.add(new Edge(e.from + PP, e.to + PP, PP + 1)); //zduplikuje graf
+    for(int i=0; i<PP; i++) for(int j=i+PP; j<2*PP; j++) pairs_tmp.add(new Edge(i,j,PP+1)); //pospaja kazde 2 vrcholy z povodneho a duplikovaneho grafu
+   	
+    return BB(pairs_tmp).count; 	
+}
+

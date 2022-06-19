@@ -1,0 +1,36 @@
+BB = BlackBox (program na zisťovanie kardinality)
+BB(set of possible edges)
+set of possible_pairs [A, B] = pp
+set of players_in_pairs = pip;
+zistiť kardinalitu pomocou BB
+kardinalita = K
+max_kardinalita = Km (počet hráčov/2) - zaokruhlene nadol
+párnosť (parita počtu hráčov) = p (true/false)
+
+vyradení hráči = vh;
+
+ak K < Km && p = true, tak vyrad(2*(Km-K), pip, pp);
+ak K < Km && p = false, tak vyrad(2*(Km-k)+1, pip, pp);
+
+vyrad(int count, set pip, set pp) {
+    if (count == 0) return;
+    pip_tmp = pip;
+    pp_tmp = pp;	
+    for(Player p: pip) {
+	Player p;
+	allPairsWithPlayer = findPairsWithPlayer(p);
+    	pip_tmp -= p;
+    	pp_tmp -= allPairsWithPlayer;
+    	k_tmp = BB(pp_tmp);
+    	if (k_tmp == K) {
+	    vh.add(hrac s najmensimi bodmi};
+	    vyrad(count-1, pip_tmp, pp_tmp);
+	    break;
+        }
+	pip_tmp += p;
+	pp_tmp += allPairsWithPlayer;
+//aktualne testovaneho hraca vrat späť do množiny hráčov, tiež aj jeho hrany, pokracuj s hracom, s druhym najnižším počtom bodov, atď, až kým sa nenájde taký, ktorého je možné vyradiť *)
+    }
+}
+
+*ak na začiatku zistí BB, že je možné vyradiť hráča, tak sa určite nájde taký, ktorého je možné vyradiť
